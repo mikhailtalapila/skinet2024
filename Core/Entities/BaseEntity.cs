@@ -2,7 +2,7 @@ using System;
 
 namespace Core.Entities;
 
-public class Entity
+public class BaseEntity
 {
-
+    public int Id { get; set; }
 }

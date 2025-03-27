@@ -31,7 +31,7 @@ public class ProductRepository(StoreContext context) : IProductRepository
 
     public async Task<IReadOnlyList<Product>> GetProductsAsync()
     {
-        return await context.Products.ToListAsync();
+        return await context.Products.ToListAsync();        
     }
 
     public async Task<IReadOnlyList<Product>> GetProductsAsync(string? brand, string? type, string? sort)

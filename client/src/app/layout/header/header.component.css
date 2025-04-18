@@ -11,3 +11,7 @@
     height: 32px;
 }
 
+a.active {
+    color: #7d00fa;
+}
+

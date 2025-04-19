@@ -1,11 +1,20 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { MatCard } from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-server-error',
-  imports: [],
+  imports: [
+    MatCard
+  ],
   templateUrl: './server-error.component.html',
   styleUrl: './server-error.component.css'
 })
 export class ServerErrorComponent {
-
+  error?: any;
+  constructor(private router: Router) {
+    const navagation = this.router.getCurrentNavigation();
+    this.error = navagation?.extras.state?.['error'];
+  }
 }

@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
+import { CartService } from '../../../core/services/cart.service';
+import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',
   imports: [
-    MatButton, 
-    MatIcon,
+    MatButton,
     MatFormField,
     MatLabel,
-    MatInput
+    MatInput,
+    CurrencyPipe,
+    RouterLink
   ],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.css'
 })
 export class OrderSummaryComponent {
-
+  cartService = inject(CartService);
 }

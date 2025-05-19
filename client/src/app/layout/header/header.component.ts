@@ -21,7 +21,6 @@ import { MatDivider } from '@angular/material/divider';
     MatProgressBar,
     MatMenuTrigger,
     MatMenu,
-    MatDivider,
     MatMenuItem
   ],
   templateUrl: './header.component.html',

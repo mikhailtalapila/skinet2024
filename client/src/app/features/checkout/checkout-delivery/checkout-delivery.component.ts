@@ -35,6 +35,7 @@ export class CheckoutDeliveryComponent implements OnInit {
   }
 
   async updateDeliveryMethod(method: DeliveryMethod) {
+    console.log('method: ', method);
     this.cartService.selectedDelivery.set(method);
     const cart = this.cartService.cart();
     if (cart) {

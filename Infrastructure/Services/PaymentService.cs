@@ -64,7 +64,7 @@ public class PaymentService(IConfiguration config,
         var coupon = await couponService.GetAsync(appCoupon.CouponId);
         if (coupon.AmountOff.HasValue)
         {
-            subtotal -= (long)coupon.AmountOff * 100;
+            subtotal -= (long)coupon.AmountOff;
         }
         if (coupon.PercentOff.HasValue)
         {

@@ -34,18 +34,15 @@ export class OrderSummaryComponent {
 
   applyCouponCode() {
     if (!this.code) return;
-    console.log('a');
     this.cartService.applyDiscount(this.code).subscribe({
       next: async coupon => {
         const cart = this.cartService.cart();
         if (cart) {
-          console.log('cart b:', cart);
           cart.coupon = coupon;
-          this.cartService.setCart(cart);
+          await firstValueFrom(this.cartService.setCart(cart));
           this.code = undefined;
         }
         if (this.location.path() === '/checkout') {
-          console.log('c');
           await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
         }
       }
@@ -56,7 +53,7 @@ export class OrderSummaryComponent {
     const cart = this.cartService.cart();
     if (!cart) return;
     if (cart.coupon) cart.coupon = undefined;
-    this.cartService.setCart(cart);
+    await firstValueFrom(this.cartService.setCart(cart));
     if (this.location.path() === '/checkout') {
       await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
     }

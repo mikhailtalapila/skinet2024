@@ -26,7 +26,7 @@ public class CouponService : ICouponService
             return new AppCoupon
             {
                 Name = promoCode.Coupon.Name,
-                AmountOff = promoCode.Coupon.AmountOff,
+                AmountOff = Convert.ToDecimal(promoCode.Coupon.AmountOff) / 100,
                 PercentOff = promoCode.Coupon.PercentOff,
                 PromotionalCode = promoCode.Code,
                 CouponId = promoCode.Coupon.Id

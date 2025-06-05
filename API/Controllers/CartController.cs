@@ -19,10 +19,11 @@ public class CartController(ICartService cartService): BaseAPIController
     public async Task<ActionResult<ShoppingCart>> UpdateCart(ShoppingCart cart)
     {
         var updatedCart = await cartService.SetCartAsync(cart);
-        if (updatedCart == null ) return BadRequest("Problem with cart");
+
+        if (updatedCart == null) return BadRequest("Problem with cart");
 
         return updatedCart;
-    } 
+    }
 
     [HttpDelete]
     public async Task<ActionResult> DeleteCart(string id)

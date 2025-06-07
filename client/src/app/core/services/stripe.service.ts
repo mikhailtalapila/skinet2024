@@ -98,8 +98,8 @@ export class StripeService {
   }
 
   async confirmPayment(confirmationToken: ConfirmationToken) {
-    const stripe = await this.getStripeInstance();
     const elements = await this.initializeElements();
+    const stripe = await this.getStripeInstance();    
     const result = await elements.submit();
     if (result.error) throw new Error(result.error.message);
     const clientSecret = this.cartService.cart()?.clientSecret;
@@ -122,9 +122,9 @@ export class StripeService {
 
     if (!cart) throw new Error('Problem with cart');
     return this.http.post<Cart>(this.baseUrl + 'payments/' + cart.id, {}).pipe(
-      map(cart => {
+      map(async cart => {
         if (!hasClientSecret) {
-          this.cartService.setCart(cart);
+          await firstValueFrom(this.cartService.setCart(cart));
           return cart;
         }
         return cart;

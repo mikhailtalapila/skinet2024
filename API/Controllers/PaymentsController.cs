@@ -36,6 +36,7 @@ public class PaymentsController(IPaymentService paymentService,
     [HttpPost("webhook")]
     public async Task<IActionResult> StripeWebhook()
     {
+        Thread.Sleep(1000);
         var json = await new StreamReader(Request.Body).ReadToEndAsync();
         try
         {
@@ -63,7 +64,7 @@ public class PaymentsController(IPaymentService paymentService,
             var spec = new OrderSpecification(intent.Id, true);
             var order = await unit.Repository<Order>().GetEntityWithSpec(spec) ?? throw new Exception("Order not found");
             var orderTotalInCents = (long)Math.Round(order.GetTotal() * 100, MidpointRounding.AwayFromZero);
-            if (orderTotalInCents != intent.Amount)
+            if (orderTotalInCents != intent.Amount && Math.Abs(orderTotalInCents - intent.Amount) > 1)
             {
                 order.Status = OrderStatus.PaymentMismatch;
             }

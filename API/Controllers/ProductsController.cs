@@ -2,6 +2,7 @@ using API.RequestHelpers;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -28,32 +29,35 @@ public class ProductsController(IUnitOfWork unit) : BaseAPIController
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Product>> CreateProduct(Product product)
     {
         unit.Repository<Product>().Add(product);
         if (await unit.Complete())
         {
-            return CreatedAtAction("GetProduct", new {id = product.Id}, product);
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
         return BadRequest("Problem creating product");
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateProduct(int id, Product product)
     {
         if (product.Id != id || !ProductExists(id)) return BadRequest("Cannot update this product");
         unit.Repository<Product>().Update(product);
-        if(await unit.Complete()) return NoContent();
+        if (await unit.Complete()) return NoContent();
         return BadRequest("Problem updating the product");
-    } 
+    }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProduct(int id)
     {
         var product = await unit.Repository<Product>().GetByIdAsync(id);
         if (product == null) return NotFound();
         unit.Repository<Product>().Remove(product);
-        if(await unit.Complete()) return NoContent();
+        if (await unit.Complete()) return NoContent();
         return BadRequest("Problem deleting the product");
     }
     [HttpGet("brands")]

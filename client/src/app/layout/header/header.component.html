@@ -9,6 +9,10 @@
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}" 
                 >Shop</a>
+                <a routerLink="/admin" 
+                routerLinkActive="active" *appIsAdmin
+                [routerLinkActiveOptions]="{exact: true}" 
+                >Admin</a>
             <!-- <a routerLink="/test-error" routerLinkActive="active">Errors</a> -->
         </nav>
         <div class="flex gap-3 align-middle">

@@ -1,4 +1,3 @@
-using System;
 using System.Security.Claims;
 using API.DTOs;
 using API.Extensions;
@@ -6,7 +5,6 @@ using Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
@@ -48,12 +46,13 @@ public class AccountController(SignInManager<AppUser> signInManager): BaseAPICon
     {
         if (User.Identity?.IsAuthenticated == false) return NoContent();
         var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
-        return Ok(new 
+        return Ok(new
         {
             user.FirstName,
             user.LastName,
             user.Email,
-            Address = user.Address?.ToDto()
+            Address = user.Address?.ToDto(),
+            Roles = User.FindFirstValue(ClaimTypes.Role)
         });
     }
 

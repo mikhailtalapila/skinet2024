@@ -57,3 +57,13 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## How to run the app locally
+Make sure the docker containers are running
+    - sql 
+    - redis
+Run API project in the terminal using: dotnet watch
+Run client project in the terminal using: npm start
+Run stripe utility to be able to connect to the api to use webhooks: stripe listen --forward-to https://localhost:5001/api/payments/webhook -e payment_intent.succeeded
+
+Navigate to https://localhost:4200 to view the application

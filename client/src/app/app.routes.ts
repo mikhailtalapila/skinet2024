@@ -30,7 +30,7 @@ export const routes: Routes = [
     {path: 'server-error', component: ServerErrorComponent},
     {path: 'checkout', loadChildren: () => import('./features/checkout/routes').then(r => r.checkoutRoutes)},
     {path: 'orders', loadChildren: () => import('./features/order/routes').then(r => r.orderRoutes)},
-    {path: 'admin', component: AdminComponent, loadComponent: () => import('./features/admin/admin.component').then(c =>c.AdminComponent),
+    {path: 'admin', loadComponent: () => import('./features/admin/admin.component').then(c =>c.AdminComponent),
         canActivate: [authGuard, adminGuard]},
     {path: '**', redirectTo: 'not-found', pathMatch: 'full'}    
 ];
